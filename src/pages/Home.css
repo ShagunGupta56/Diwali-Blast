@@ -1512,3 +1512,9 @@
   }
   .card-creator .image-card .card-image-content { padding-top: 29% !important; }
 }
+.navbar-logo {
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+  border-radius: 50%;
+}
