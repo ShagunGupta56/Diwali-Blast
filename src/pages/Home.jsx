@@ -177,7 +177,7 @@ const [incomingError, setIncomingError] = useState("");
 
       try {
         const response = await fetch(
-          `http://localhost:5000/api/cards/${encodeURIComponent(cardId)}`
+          `${import.meta.env.VITE_API_URL}/api/cards/${encodeURIComponent(cardId)}`
         );
 
         const data = await response.json();
@@ -407,7 +407,7 @@ const createCardInDatabase = async () => {
   }
 
   try {
-    const response = await fetch("http://localhost:5000/api/cards", {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/cards`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
