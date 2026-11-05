@@ -186,8 +186,14 @@ const [incomingError, setIncomingError] = useState("");
           throw new Error("Card nahi mila.");
         }
 
-        setIncomingName(data.card.senderName);
-        setIncomingTemplate(data.card.template);
+        const receivedName =
+  data.card.senderName ||
+  data.card.sender_name ||
+  data.card.sender ||
+  "";
+
+setIncomingName(receivedName);
+setIncomingTemplate(data.card.template || "royal");
       } catch (error) {
         console.error("Card fetch error:", error);
         setIncomingError("Sorry! Ye Diwali card nahi mil paya.");
@@ -641,7 +647,12 @@ ${shareUrl.toString()}
                   <p className="card-eyebrow">🪔 दीपावली की हार्दिक शुभकामनाएँ 🪔</p>
                   <h2>शुभ दीपावली!</h2>
                   <p>आपके और आपके परिवार के लिए ढेर सारी खुशियाँ, प्यार, स्वास्थ्य और समृद्धि की मंगलकामनाएँ!</p>
-                  <div className="card-sender">With Love,<strong>{senderName.trim() || "आपका शुभचिंतक"}</strong></div>
+                  <div className="card-sender">
+                       With Love,
+                       <strong>
+                          {incomingName || "आपका शुभचिंतक"}
+                       </strong>
+                  </div>
                   <div className="card-gift">🎁 A Special Diwali Gift For You!</div>
                   <div className="card-happy">✨ Happy Diwali! ✨</div>
                 </div>
