@@ -9,19 +9,19 @@ import "./Home.css";
 
 const FIREWORKS = {
   anar: {
-    title: "Golden Anar",
-    subtitle: "A fountain of golden sparks!",
+    title: "सुनहरी अनार | Golden Anar",
+    subtitle: "सुनहरी चिंगारियों की फुहार | A fountain of golden sparks!",
     icon: "✨",
     sound: "/audio/anar.mp3",
   },
   chakri: {
-    title: "Magic Chakri",
+    title: "रंगीन चकरी | Magic Chakri",
     subtitle: "A colourful whirl of light!",
     icon: "🌀",
     sound: "/audio/chakri.mp3",
   },
   sky: {
-    title: "Sky Shot",
+    title: "आसमान की आतिशबाज़ी | Sky Shot",
     subtitle: "A magical burst across the sky!",
     icon: "🎆",
     sound: "/audio/sky-shot.mp3",
@@ -104,13 +104,13 @@ function FireworkShow({ type }) {
         <>
           <div className="anar-fountain-glow" />
           <div className="anar-fountain">
-            {Array.from({ length: 38 }).map((_, i) => (
+            {Array.from({ length: 84 }).map((_, i) => (
               <i key={i} style={{
                 "--i": i,
-                "--angle": `${-68 + (i / 37) * 136}deg`,
-                "--dx": `${Math.round((-1 + 2 * (i / 37)) * (55 + (i % 6) * 17))}px`,
-                "--dy": `${-105 - (i % 7) * 18}px`,
-                "--delay": `${(i % 9) * 0.055}s`,
+                "--angle": `${-78 + (i / 83) * 156}deg`,
+                "--dx": `${Math.round((-1 + 2 * (i / 83)) * (75 + (i % 8) * 16))}px`,
+                "--dy": `${-115 - (i % 9) * 19}px`,
+                "--delay": `${(i % 14) * 0.045}s`,
               }} />
             ))}
           </div>
@@ -129,13 +129,13 @@ function FireworkShow({ type }) {
         <div className="sky-stage">
           <div className="sky-rocket"><span /></div>
           <div className="sky-burst burst-one">
-            {Array.from({ length: 30 }).map((_, i) => <i key={i} style={{ "--i": i, "--angle": `${i * 12}deg`, "--distance": `${72 + (i % 5) * 13}px` }} />)}
+            {Array.from({ length: 44 }).map((_, i) => <i key={i} style={{ "--i": i, "--angle": `${i * 8.18}deg`, "--distance": `${92 + (i % 7) * 11}px` }} />)}
           </div>
           <div className="sky-burst burst-two">
-            {Array.from({ length: 24 }).map((_, i) => <i key={i} style={{ "--i": i, "--angle": `${i * 15}deg`, "--distance": `${48 + (i % 4) * 12}px` }} />)}
+            {Array.from({ length: 32 }).map((_, i) => <i key={i} style={{ "--i": i, "--angle": `${i * 11.25}deg`, "--distance": `${68 + (i % 6) * 10}px` }} />)}
           </div>
           <div className="sky-burst burst-three">
-            {Array.from({ length: 20 }).map((_, i) => <i key={i} style={{ "--i": i, "--angle": `${i * 18}deg`, "--distance": `${40 + (i % 4) * 10}px` }} />)}
+            {Array.from({ length: 28 }).map((_, i) => <i key={i} style={{ "--i": i, "--angle": `${i * 12.86}deg`, "--distance": `${62 + (i % 6) * 9}px` }} />)}
           </div>
         </div>
       )}
@@ -386,7 +386,7 @@ setIncomingTemplate(data.card.template || "royal");
     timerRef.current = setTimeout(() => {
       setIgniting(false);
       setFireworkDone(true);
-    }, selectedFirework === "sky" ? 950 : 750);
+    }, selectedFirework === "sky" ? 2350 : 2100);
   };
 
   const restartCelebration = () => {
@@ -408,7 +408,7 @@ const createCardInDatabase = async () => {
   const cleanName = senderName.trim();
 
   if (!cleanName) {
-    setShareMessage("Pehle apna naam likhiye 😊");
+    setShareMessage("पहले अपना नाम लिखें 😊 | Please enter your name first.");
     return null;
   }
 
@@ -434,7 +434,7 @@ const createCardInDatabase = async () => {
 
   } catch (error) {
     console.error("Card save error:", error);
-    setShareMessage("Card save nahi ho paya. Please try again.");
+    setShareMessage("कार्ड सेव नहीं हो पाया। दोबारा कोशिश करें। | Could not save the card. Please try again.");
     return null;
   }
 };
@@ -445,7 +445,7 @@ const shareCard = async () => {
   const cleanName = senderName.trim();
 
   if (!cleanName) {
-    setShareMessage("Pehle apna naam likhiye 😊");
+    setShareMessage("पहले अपना नाम लिखें 😊 | Please enter your name first.");
     return;
   }
 
@@ -459,34 +459,28 @@ const shareCard = async () => {
 
 इस पावन पर्व पर आपके जीवन में सुख, शांति, प्रेम और समृद्धि के अनगिनत दीप जलें। आपका घर खुशियों और मुस्कान से हमेशा रोशन रहे। ❤️
 
-🎁 A Special Diwali Gift For You!
+🎁 आपके लिए दिवाली का खास उपहार! | A Special Diwali Gift For You!
 
 यह छोटा-सा तोहफा मेरी तरफ से आपके लिए...
 
-With Love, ${cleanName}
+स्नेह सहित | With Love, ${cleanName}
 
 👇 अपना खास Diwali Gift खोलने के लिए यहाँ क्लिक करें:
 
-🎁 Open Your Diwali Gift:
+🎁 अपना दिवाली उपहार खोलें | Open Your Diwali Gift:
 
 ${shareUrl.toString()}
 
 ✨ Happy Diwali! ✨`;
 
   try {
-    if (navigator.share) {
-      await navigator.share({
-        title: "A Special Diwali Gift For You!",
-        text: message
-      });
-    } else {
-      await navigator.clipboard.writeText(message);
-      setShareMessage("Diwali wishes aur gift link copy ho gaya! ❤️");
-    }
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.location.href = whatsappUrl;
+    setShareMessage("WhatsApp में आपका संदेश तैयार है। भेजने से पहले जाँच लें। ❤️ | Your message is ready in WhatsApp.");
   } catch (error) {
     if (error.name !== "AbortError") {
       console.error(error);
-      setShareMessage("Share nahi ho paya. Dobara try kijiye.");
+      setShareMessage("शेयर नहीं हो पाया। दोबारा कोशिश करें। | Sharing failed. Please try again.");
     }
   }
 };
@@ -529,19 +523,19 @@ ${shareUrl.toString()}
         <div className="brand">🪔 Diwali <b>Blast</b></div>
         <button className="sound-button" onClick={toggleSound} aria-label="Toggle sound">
           {sound ? <Volume2 /> : <VolumeX />}
-          <span>{sound ? "Sound On" : "Sound Off"}</span>
+          <span>{sound ? "आवाज़ चालू | Sound On" : "आवाज़ बंद | Sound Off"}</span>
         </button>
       </nav>
 
       <section className="celebration-stage">
-        <div className="welcome-label"><Sparkles size={16} /> A FESTIVAL OF LIGHTS & HAPPINESS</div>
+        <div className="welcome-label"><Sparkles size={16} /> रोशनी और खुशियों का त्योहार | A FESTIVAL OF LIGHTS & HAPPINESS</div>
         <AnimatePresence mode="wait">
           {stage === "welcome" && (
             <motion.div key="welcome" className="stage-content" initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
-              <h1 className="main-heading">Let Happiness<br /><span>Shine Everywhere</span></h1>
-              <p className="stage-description">Iss Diwali, roshni baantein, khushiyan baantein aur apno ke chehre par muskaan laayein. A little magic is waiting just for you!</p>
+              <h1 className="main-heading">खुशियाँ बाँटें,<br /><span>हर ओर रोशनी फैलाएँ</span></h1>
+              <p className="stage-description">इस दिवाली, रोशनी बाँटें, खुशियाँ बाँटें और अपनों के चेहरे पर मुस्कान लाएँ। आपके लिए एक छोटा-सा जादुई अनुभव इंतज़ार कर रहा है! | This Diwali, spread light, happiness and smiles.</p>
               <div className="welcome-art"><div className="art-diya">🪔</div><div className="art-flower">🌼</div><div className="art-sparkle">✨</div></div>
-              <button className="gold-button" onClick={startExperience}><Sparkles size={19} /> Light Your Diya <ArrowRight size={18} /></button>
+              <button className="gold-button" onClick={startExperience}><Sparkles size={19} /> अपना दीपक जलाएँ | Light Your Diya <ArrowRight size={18} /></button>
               <p className="small-hint">A little light, a lot of happiness ❤️</p>
             </motion.div>
           )}
@@ -549,19 +543,19 @@ ${shareUrl.toString()}
           {(stage === "diya" || stage === "lit") && (
             <motion.div key="diya" className="stage-content diya-screen" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
               {!celebrating && <>
-                <h2 className="stage-heading">A Little Light, A Lot of Happiness</h2>
-                <p className="stage-description">Har roshni ek nayi umeed laati hai. Apne haathon se ye diya jalaaiye!</p>
+                <h2 className="stage-heading">एक छोटा-सा दीप, ढेर सारी खुशियाँ</h2>
+                <p className="stage-description">हर रोशनी एक नई उम्मीद लाती है। अपने हाथों से यह दीपक जलाएँ!</p>
               </>}
               <Diya lit={stage === "lit"} onClick={lightDiya} />
-              {stage === "diya" && <p className="tap-text">✨ Tap the diya to light it ✨</p>}
+              {stage === "diya" && <p className="tap-text">✨ दीपक जलाने के लिए इसे छुएँ | Tap the diya to light it ✨</p>}
               <AnimatePresence>
                 {celebrating && (
                   <motion.div className="celebration-message" initial={{ opacity: 0, y: 35 }} animate={{ opacity: 1, y: 0 }}>
                     <div className="celebration-burst">{Array.from({ length: 20 }).map((_, i) => <span key={i} style={{ "--i": i }}>✦</span>)}</div>
-                    <h2 className="main-heading">Your Light,<br /><span>Your Happiness!</span></h2>
-                    <p className="stage-description">May this Diwali bring endless happiness, peace, love and prosperity into your life.</p>
-                    <div className="wish-message"><Heart fill="#ECA34A" /><p>Aapki zindagi hamesha khushiyon ki roshni se jagmagati rahe!</p><strong>Happy Diwali! 🪔</strong></div>
-                    <button className="gold-button" onClick={() => setStage("fireworks")}>🎆 Let's Fire the Crackers! <ArrowRight size={18} /></button>
+                    <h2 className="main-heading">आपकी रोशनी,<br /><span>आपकी खुशियाँ!</span></h2>
+                    <p className="stage-description">यह दिवाली आपके जीवन में ढेर सारी खुशियाँ, शांति, प्रेम और समृद्धि लेकर आए! | May this Diwali bring happiness, peace, love and prosperity.</p>
+                    <div className="wish-message"><Heart fill="#ECA34A" /><p>आपकी ज़िंदगी हमेशा खुशियों की रोशनी से जगमगाती रहे!</p><strong>Happy Diwali! 🪔</strong></div>
+                    <button className="gold-button" onClick={() => setStage("fireworks")}>🎆 आतिशबाज़ी शुरू करें | Let’s Start the Fireworks! <ArrowRight size={18} /></button>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -570,14 +564,14 @@ ${shareUrl.toString()}
 
           {stage === "fireworks" && (
             <motion.div key="fireworks" className="stage-content fireworks-screen" initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
-              <h2 className="stage-heading">Let the Celebration Begin! 🎉</h2>
-              <p className="stage-description">Choose your favourite virtual firework and light it with your magic matchbox!</p>
+              <h2 className="stage-heading">जश्न शुरू करें! | Let the Celebration Begin! 🎉</h2>
+              <p className="stage-description">अपनी पसंद की डिजिटल आतिशबाज़ी चुनें और जादुई माचिस से जलाएँ! | Choose your favourite virtual firework.</p>
 
               {!selectedFirework ? (
                 <div className="firework-options">
-                  <button className="firework-card" onClick={() => chooseFirework("anar")}><span>🌋</span><strong>Golden Anar</strong><small>A fountain of golden sparks</small></button>
-                  <button className="firework-card" onClick={() => chooseFirework("chakri")}><span>🌀</span><strong>Magic Chakri</strong><small>A colourful spinning surprise</small></button>
-                  <button className="firework-card" onClick={() => chooseFirework("sky")}><span>🚀</span><strong>Sky Shot</strong><small>A burst of light in the sky</small></button>
+                  <button className="firework-card" onClick={() => chooseFirework("anar")}><span>🌋</span><strong>सुनहरी अनार | Golden Anar</strong><small>सुनहरी चिंगारियों की फुहार | A fountain of golden sparks</small></button>
+                  <button className="firework-card" onClick={() => chooseFirework("chakri")}><span>🌀</span><strong>रंगीन चकरी | Magic Chakri</strong><small>रंग-बिरंगी घूमती रोशनी | A colourful spinning surprise</small></button>
+                  <button className="firework-card" onClick={() => chooseFirework("sky")}><span>🚀</span><strong>आसमान की आतिशबाज़ी | Sky Shot</strong><small>आसमान में रोशनी की बौछार | A burst of light in the sky</small></button>
                 </div>
               ) : (
                 <motion.div className="firework-play-area" initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }}>
@@ -598,19 +592,19 @@ ${shareUrl.toString()}
                         </motion.div>
                         {igniting && <div className="match-flare">✦</div>}
                       </div>
-                      <p className="match-hint">{igniting ? "Lighting your virtual firework..." : "Your matchbox is ready! Tap below to light it."}</p>
+                      <p className="match-hint">{igniting ? "आपकी डिजिटल आतिशबाज़ी जल रही है... | Lighting your virtual firework..." : "माचिस तैयार है! जलाने के लिए नीचे दबाएँ। | Your matchbox is ready!"}</p>
                       <button className="gold-button light-firework-button" data-sound="special" onClick={lightFirework} disabled={igniting}>
-                        <Flame size={20} /> {igniting ? "Lighting..." : "Light with Matchbox!"}
+                        <Flame size={20} /> {igniting ? "Lighting..." : "माचिस से जलाएँ | Light with Matchbox!"}
                       </button>
                     </>
                   ) : (
                     <motion.div className="firework-finale" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                       <FireworkShow type={selectedFirework} />
-                      <h2 className="main-heading"><span>Wah! Kya Celebration Hai!</span></h2>
-                      <p className="stage-description">Aapki Diwali roshni, rang aur khushiyon se bhar jaaye! ✨</p>
+                      <h2 className="main-heading"><span>वाह! क्या शानदार जश्न है!</span></h2>
+                      <p className="stage-description">आपकी दिवाली रोशनी, रंगों और खुशियों से भर जाए! ✨</p>
                       <div className="firework-actions">
-                        <button className="gold-button" onClick={() => chooseFirework("")}><RotateCcw size={18} /> Try Another Firework</button>
-                        <button className="outline-gold-button" onClick={openCardCreator}><Gift size={18} /> Create My Wish Card</button>
+                        <button className="gold-button" onClick={() => chooseFirework("")}><RotateCcw size={18} /> दूसरी आतिशबाज़ी चुनें | Try Another Firework</button>
+                        <button className="outline-gold-button" onClick={openCardCreator}><Gift size={18} /> अपना शुभकामना कार्ड बनाएँ | Create My Wish Card</button>
                       </div>
                     </motion.div>
                   )}
@@ -623,10 +617,10 @@ ${shareUrl.toString()}
           {stage === "card" && (
             <motion.div key="card" className="stage-content card-creator" initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }}>
               <div className="card-icon"><Gift size={34} /></div>
-              <h2 className="stage-heading">Send a Little Diwali Magic 💌</h2>
-              <p className="stage-description">Apna naam likhiye aur apno ko ek pyaara sa Diwali greeting card bhejiye.</p>
+              <h2 className="stage-heading">दिवाली की खुशियाँ अपनों तक पहुँचाएँ 💌</h2>
+              <p className="stage-description">अपना नाम लिखें, सुंदर डिज़ाइन चुनें और परिवार व दोस्तों को दिवाली कार्ड भेजें। | Enter your name, choose a design and send a Diwali card.</p>
 
-              <h3 className="template-heading">Choose your favourite design</h3>
+              <h3 className="template-heading">अपना पसंदीदा डिज़ाइन चुनें | Choose your favourite design</h3>
               <div className="template-gallery">
                 <button type="button" className={`template-option ${selectedTemplate === "royal" ? "active" : ""}`} onClick={() => setSelectedTemplate("royal")}>
                   <span className="template-swatch royal-swatch">🪔</span><strong>Royal Gold</strong><small>Purple & gold</small>
@@ -648,20 +642,20 @@ ${shareUrl.toString()}
                   <h2>शुभ दीपावली!</h2>
                   <p>आपके और आपके परिवार के लिए ढेर सारी खुशियाँ, प्यार, स्वास्थ्य और समृद्धि की मंगलकामनाएँ!</p>
                   <div className="card-sender">
-                       With Love,
+                       स्नेह सहित | With Love,
                        <strong>
                           {incomingName || "आपका शुभचिंतक"}
                        </strong>
                   </div>
-                  <div className="card-gift">🎁 A Special Diwali Gift For You!</div>
+                  <div className="card-gift">🎁 आपके लिए दिवाली का खास उपहार! | A Special Diwali Gift For You!</div>
                   <div className="card-happy">✨ Happy Diwali! ✨</div>
                 </div>
               </div>
-              <label className="name-label" htmlFor="sender-name">Aapka naam</label>
-              <input id="sender-name" className="name-input" value={senderName} onChange={(e) => { setSenderName(e.target.value); setShareMessage(""); }} placeholder="Apna naam yahan likhein..." maxLength={40} />
-              <button className="gold-button share-card-button" onClick={shareCard}><Share2 size={19} /> Send to Friends <ArrowRight size={18} /></button>
+              <label className="name-label" htmlFor="sender-name">आपका नाम | Your name</label>
+              <input id="sender-name" className="name-input" value={senderName} onChange={(e) => { setSenderName(e.target.value); setShareMessage(""); }} placeholder="यहाँ अपना नाम लिखें | Enter your name here..." maxLength={40} />
+              <button className="gold-button share-card-button" onClick={shareCard}><Share2 size={19} /> अपनों को भेजें | Send to Friends <ArrowRight size={18} /></button>
               {shareMessage && <p className="share-feedback" role="status">{shareMessage}</p>}
-              <p className="card-note">Share karne par aapke naam ke saath ek personalised link banega. Friends use kholkar aapki Diwali wish dekh sakenge.</p>
+              <p className="card-note">आपके नाम से एक खास कार्ड लिंक बनेगा। इसे अपनों को भेजें; वे लिंक खोलकर आपकी दिवाली शुभकामना देख सकेंगे। | A personalised card link will be created for you to share.</p>
               <button className="text-button" onClick={restartCelebration}>← Celebrate again</button>
             </motion.div>
           )}
@@ -669,7 +663,7 @@ ${shareUrl.toString()}
           {stage === "sharedCard" && (
             <motion.div key="shared-card" className="stage-content card-creator" initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }}>
               <div className="card-icon"><WandSparkles size={36} /></div>
-              <h2 className="stage-heading">A Special Wish Just For You!</h2>
+              <h2 className="stage-heading">आपके लिए एक खास शुभकामना! | A Special Wish Just For You!</h2>
               {incomingLoading && (
   <p className="stage-description">
     🪔 Aapka special Diwali gift load ho raha hai...
@@ -688,20 +682,21 @@ ${shareUrl.toString()}
                   <p className="card-eyebrow">🪔 दीपावली की हार्दिक शुभकामनाएँ 🪔</p>
                   <h2>शुभ दीपावली!</h2>
                   <p>आपके और आपके परिवार के लिए ढेर सारी खुशियाँ, प्यार, स्वास्थ्य और समृद्धि की मंगलकामनाएँ!</p>
-                  <div className="card-sender">With Love,<strong>{incomingName}</strong></div>
-                  <div className="card-gift">🎁 A Special Diwali Gift For You!</div>
+                  <div className="card-sender">स्नेह सहित | With Love,<strong>{incomingName}</strong></div>
+                  <div className="card-gift">🎁 आपके लिए दिवाली का खास उपहार! | A Special Diwali Gift For You!</div>
                   <div className="card-happy">✨ Happy Diwali! ✨</div>
                 </div>
               </div>
             )}  
               <p className="stage-description">आपको और आपके परिवार को दीपावली की ढेरों शुभकामनाएँ। आपका हर दिन मंगलमय हो! ❤️</p>
-              <button className="gold-button" onClick={() => { window.history.replaceState({}, "", window.location.pathname); setStage("welcome"); }}>🎁 Open Your Diwali Gift <ArrowRight size={18} /></button>
+              <button className="gold-button" onClick={() => { window.history.replaceState({}, "", window.location.pathname); setStage("welcome"); }}>🎁 अपना दिवाली उपहार खोलें | Open Your Diwali Gift <ArrowRight size={18} /></button>
+              <button className="outline-gold-button" onClick={() => { window.history.replaceState({}, "", window.location.pathname); setSenderName(""); setShareMessage(""); setStage("card"); }}>✨ अपना दिवाली कार्ड बनाएँ | Create Your Own Diwali Card</button>
             </motion.div>
           )}
         </AnimatePresence>
       </section>
 
-      <footer className="diwali-footer">Made with ❤️ to spread happiness around the world.<p>Diwali Blast ✨</p></footer>
+      <footer className="diwali-footer">दुनियाभर में खुशियाँ बाँटने के लिए ❤️ | Made with love to spread happiness around the world.<p>Diwali Blast ✨</p></footer>
     </main>
   );
 }
